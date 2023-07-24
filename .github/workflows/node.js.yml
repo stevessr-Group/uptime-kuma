@@ -26,6 +26,7 @@ jobs:
     - run: |
           npm install pnpm -g
           pnpm install
+          pnpm setup
           pnpm build
           pnpm install pkg -g
           pkg package.json -t node18-linux-x64
