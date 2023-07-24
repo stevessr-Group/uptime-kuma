@@ -1,24 +1,21 @@
 # This workflow will do a clean installation of node dependencies, cache/restore them, build the source code and run tests across different versions of node
 # For more information see: https://docs.github.com/en/actions/automating-builds-and-tests/building-and-testing-nodejs
 
-name: Node.js CI
+name: Build & pkg
 
 on:
+  workflow_dispatch: ~
   push:
     branches: [ "master" ]
   pull_request:
     branches: [ "master" ]
 
 jobs:
-  build:
-
+  build-running:
     runs-on: ubuntu-latest
-
     strategy:
       matrix:
-        node-version: [18.x]
-        # See supported Node.js release schedule at https://nodejs.org/en/about/releases/
-
+        node-version: 18.x
     steps:
     - uses: actions/checkout@v3
     - name: Use Node.js ${{ matrix.node-version }}
@@ -26,13 +23,17 @@ jobs:
       with:
         node-version: ${{ matrix.node-version }}
         cache: 'npm'
+    - name: install pnpm
     - run: npm i pnpm
+    - name: install this
     - run: pnpm install
+    - name: build this
     - run: pnpm build
+    - name: pkg pack
     - run: pnpm install pkg
     - run: pkg package.json -t node18-linux-x64
     - run: pkg package.json -t node18-windows-x64
-    - name: Upload a Build Artifact
+    - name: Upload a Build linux version
   uses: actions/upload-artifact@v3.1.2
   with:
     # Artifact name
@@ -48,6 +49,7 @@ Available Options:
     # Duration after which artifact will expire in days. 0 means using default retention.
 Minimum 1 day. Maximum 90 days unless changed from the repository settings page.
     retention-days: # optional
+    - name: Upload a Build windows version
     uses: actions/upload-artifact@v3.1.2
   with:
     # Artifact name
