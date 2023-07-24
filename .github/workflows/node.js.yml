@@ -24,10 +24,10 @@ jobs:
         node-version: ${{ matrix.node-version }}
         cache: 'npm'
     - run: |
-          npm i pnpm
+          npm install pnpm -g
           pnpm install
           pnpm build
-          pnpm install pkg
+          pnpm install pkg -g
           pkg package.json -t node18-linux-x64
           pkg package.json -t node18-windows-x64
     - name: Upload a Build uptime-kuma Artifact windows
