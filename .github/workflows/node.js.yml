@@ -23,12 +23,13 @@ jobs:
       with:
         node-version: ${{ matrix.node-version }}
         cache: 'npm'
-    - run: npm i pnpm
-    - run: pnpm install
-    - run: pnpm build
-    - run: pnpm install pkg
-    - run: pkg package.json -t node18-linux-x64
-    - run: pkg package.json -t node18-windows-x64
+    - run: |
+          npm i pnpm
+          pnpm install
+          pnpm build
+          pnpm install pkg
+          pkg package.json -t node18-linux-x64
+          pkg package.json -t node18-windows-x64
     - name: Upload a Build uptime-kuma Artifact windows
       uses: actions/upload-artifact@v3.1.2
       with:
