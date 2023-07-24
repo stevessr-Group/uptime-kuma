@@ -23,13 +23,9 @@ jobs:
       with:
         node-version: ${{ matrix.node-version }}
         cache: 'npm'
-    - name: install pnpm
     - run: npm i pnpm
-    - name: install this
     - run: pnpm install
-    - name: build this
     - run: pnpm build
-    - name: pkg pack
     - run: pnpm install pkg
     - run: pkg package.json -t node18-linux-x64
     - run: pkg package.json -t node18-windows-x64
@@ -43,4 +39,3 @@ jobs:
       with:
         path: uptime-kuma
         name: uptime-kuma-linux
-        path: uptime-kuma.exe
